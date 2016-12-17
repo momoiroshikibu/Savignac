@@ -23,6 +23,7 @@
 
 
 (defun index (env)
+  (declare (ignore env))
   (let* ((locations (get-locations 100))
          ({locations} (encode-json-to-string locations)))
     `(200
@@ -42,7 +43,6 @@
 
 (defun create (env)
   (let* ((request (lack.request:make-request env))
-         (request-parameters (request-parameters request))
          (body-parameters (lack.request:request-body-parameters request))
          (lat (cdr (assoc "lat" body-parameters :test #'string=)))
          (lng (cdr (assoc "lng" body-parameters :test #'string=)))
