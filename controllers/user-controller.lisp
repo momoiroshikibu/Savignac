@@ -30,6 +30,7 @@
 
 
 (defun index (env)
+  (declare (ignore env))
   (let* ((users (get-users 1000))
         ({users} (encode-json-to-string users)))
     `(200
