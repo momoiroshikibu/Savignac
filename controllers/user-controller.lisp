@@ -1,6 +1,7 @@
 (in-package :cl-user)
 (defpackage com.momoiroshikibu.controllers.user
   (:use :cl)
+  (:nicknames :user-controller)
   (:import-from :com.momoiroshikibu.utils
                 :read-file-into-string)
   (:import-from :com.momoiroshikibu.utils.string-util

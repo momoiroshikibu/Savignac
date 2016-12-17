@@ -1,6 +1,7 @@
 (in-package :cl-user)
 (defpackage com.momoiroshikibu.controllers.location
   (:use :cl)
+  (:nicknames :location-controller)
   (:import-from :com.momoiroshikibu.utils
                 :read-file-into-string)
   (:import-from :com.momoiroshikibu.repositories.location
@@ -14,21 +15,21 @@
   (:import-from :lack.request
                 :make-request
                 :request-parameters)
-  (:export :location-index
-           :location-by-id
-           :register-location))
+  (:export :index
+           :show
+           :create))
 (in-package :com.momoiroshikibu.controllers.location)
 
 
 
-(defun location-index (env)
+(defun index (env)
   (let* ((locations (get-locations 100))
          ({locations} (encode-json-to-string locations)))
     `(200
       (:content-type "application/json")
       (,{locations}))))
 
-(defun location-by-id (id)
+(defun show (id)
   (let* ((location (get-location-by-id id))
          ({location} (encode-json-to-string location)))
     (if location
@@ -39,7 +40,7 @@
           (:content-type "application/json")
           ("null")))))
 
-(defun register-location (env)
+(defun create (env)
   (let* ((request (lack.request:make-request env))
          (request-parameters (request-parameters request))
          (body-parameters (lack.request:request-body-parameters request))

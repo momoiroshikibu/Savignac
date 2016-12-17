@@ -5,15 +5,8 @@
                 :404-NOT-FOUND)
   (:import-from :com.momoiroshikibu.utils.string-util
                 :join-into-string)
-  (:import-from :com.momoiroshikibu.controllers.user
-                :index
-                :show
-                :create
-                :destroy)
-  (:import-from :com.momoiroshikibu.controllers.location
-                :location-index
-                :location-by-id
-                :register-location)
+  (:import-from :com.momoiroshikibu.controllers.user)
+  (:import-from :com.momoiroshikibu.controllers.location)
   (:import-from :com.momoiroshikibu.controllers.access-token
                 :access-token-index
                 :access-token-by-access-token
@@ -54,15 +47,14 @@
 
 (defun app (env)
   (let ((request-path (getf env :path-info)))
-    (or (@GET env "/users" #'com.momoiroshikibu.controllers.user:index)
-        (@GET-BY-ID env "/users/([0-9]+)" #'com.momoiroshikibu.controllers.user:show)
+    (or (@GET env "/users" #'user-controller:index)
+        (@GET-BY-ID env "/users/([0-9]+)" #'user-controller:show)
 ;        (@DELETE/{id} "/users/([0-9]+)" #'user-controller:destroy)
-        (@POST env "/users" #'com.momoiroshikibu.controllers.user:create)
+        (@POST env "/users" #'user-controller:create)
 
-        (@GET env "/locations" #'location-index)
-        (@POST env "/locations" #'register-location)
-;        (@GET/{id} "/locations/([0-9]+)" #'location-by-id)
-        (@GET-BY-ID env "/locations/([0-9]+)" #'location-by-id)
+        (@GET env "/locations" #'location-controller:index)
+        (@POST env "/locations" #'location-controller:create)
+        (@GET-BY-ID env "/locations/([0-9]+)" #'location-controller:show)
 
         (@GET env "/access-tokens" #'access-token-index)
         (@POST env "/access-tokens" #'create-access-token)
