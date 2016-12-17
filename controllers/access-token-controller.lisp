@@ -1,6 +1,7 @@
 (in-package :cl-user)
 (defpackage com.momoiroshikibu.controllers.access-token
   (:use :cl)
+  (:nicknames :access-token-controller)
   (:import-from :com.momoiroshikibu.utils
                 :read-file-into-string)
   (:import-from :com.momoiroshikibu.utils.string-util
@@ -18,13 +19,13 @@
                 :encode-json-to-string)
   (:import-from :lack.request
                 :request-parameters)
-  (:export :access-token-index
-           :access-token-by-access-token
-           :create-access-token
-           :destroy-access-token))
+  (:export :index
+           :show
+           :create
+           :destroy))
 (in-package :com.momoiroshikibu.controllers.access-token)
 
-(defun access-token-index (env)
+(defun index (env)
   (let* ((access-tokens (get-access-tokens 100))
          ({access-tokens} (encode-json-to-string access-tokens)))
     `(200
@@ -32,7 +33,7 @@
       (,{access-tokens}))))
 
 
-(defun access-token-by-access-token (access-token)
+(defun show (access-token)
   (let* ((access-token (get-access-token-by-access-token access-token))
          ({access-token} (encode-json-to-string access-token)))
     (if access-token
@@ -43,7 +44,7 @@
           (:content-type "application/json")
           ("null")))))
 
-(defun create-access-token (env)
+(defun create (env)
   (let* ((request (lack.request:make-request env))
          (request-parameters (request-parameters request))
          (body-parameters (lack.request:request-body-parameters request))
@@ -67,7 +68,7 @@
           ("{\"message\": \"authentication failed\"}")))))
 
 
-(defun destroy-access-token (access-token)
+(defun destroy (access-token)
   (_destroy-access-token access-token)
   `(200
     (:content-type "application/json")

@@ -7,11 +7,7 @@
                 :join-into-string)
   (:import-from :com.momoiroshikibu.controllers.user)
   (:import-from :com.momoiroshikibu.controllers.location)
-  (:import-from :com.momoiroshikibu.controllers.access-token
-                :access-token-index
-                :access-token-by-access-token
-                :create-access-token
-                :destroy-access-token)
+  (:import-from :com.momoiroshikibu.controllers.access-token)
   (:import-from :lack.request
                 :make-request
                 :request-parameters)
@@ -56,8 +52,8 @@
         (@POST env "/locations" #'location-controller:create)
         (@GET-BY-ID env "/locations/([0-9]+)" #'location-controller:show)
 
-        (@GET env "/access-tokens" #'access-token-index)
-        (@POST env "/access-tokens" #'create-access-token)
-        (@GET-BY-ID env "/access-tokens/([0-9]+)" #'access-token-by-access-token)
+        (@GET env "/access-tokens" #'access-token-controller:index)
+        (@POST env "/access-tokens" #'access-token-controller:create)
+        (@GET-BY-ID env "/access-tokens/([0-9]+)" #'access-token-controller:show)
 
         (404-NOT-FOUND "{\"message\": \"not found\"}"))))
