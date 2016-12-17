@@ -64,9 +64,9 @@
       (dbi:fetch result))))
 
 
-(defun update-location (location)
-  ; TODO
-  )
+;; (defun update-location (location)
+;;   ; TODO
+;;   )
 
 (defun destroy-location-by-id (id)
   (dbi:execute *destroy-location-by-id* id))
