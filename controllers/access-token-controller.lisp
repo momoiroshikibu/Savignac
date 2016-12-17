@@ -26,6 +26,7 @@
 (in-package :com.momoiroshikibu.controllers.access-token)
 
 (defun index (env)
+  (declare (ignore env))
   (let* ((access-tokens (get-access-tokens 100))
          ({access-tokens} (encode-json-to-string access-tokens)))
     `(200
@@ -46,7 +47,6 @@
 
 (defun create (env)
   (let* ((request (lack.request:make-request env))
-         (request-parameters (request-parameters request))
          (body-parameters (lack.request:request-body-parameters request))
          (mail-address (cdr (assoc "mail-address" body-parameters :test 'string=)))
          (password (cdr (assoc "password" body-parameters :test 'string=)))
