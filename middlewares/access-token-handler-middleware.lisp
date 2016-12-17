@@ -10,6 +10,10 @@
   (:export :access-token-middleware))
 (in-package :com.momoiroshikibu.middlewares.access-token-handler-middleware)
 
+(defun 403-FORBIDDEN ()
+  '(403
+    (:content-type "application/json")
+    ("{\"message\": \"unauthorized\"}")))
 
 (defun access-token-handler-middleware (app)
   (lambda (env)
@@ -30,7 +34,3 @@
                 (funcall app env)
                 (403-FORBIDDEN)))))))
 
-(defun 403-FORBIDDEN ()
-  '(403
-    (:content-type "application/json")
-    ("{\"message\": \"unauthorized\"}")))
