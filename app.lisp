@@ -6,9 +6,9 @@
   (:import-from :com.momoiroshikibu.utils.string-util
                 :join-into-string)
   (:import-from :com.momoiroshikibu.controllers.user
-                :users
-                :users-by-id
-                :register
+                :index
+                :show
+                :create
                 :destroy)
   (:import-from :com.momoiroshikibu.controllers.location
                 :location-index
@@ -54,10 +54,10 @@
 
 (defun app (env)
   (let ((request-path (getf env :path-info)))
-    (or (@GET env "/users" #'users)
-        (@GET-BY-ID env "/users/([0-9]+)" #'users-by-id)
-;        (@DELETE/{id} "/users/([0-9]+)" #'destroy)
-        (@POST env "/users" #'register)
+    (or (@GET env "/users" #'com.momoiroshikibu.controllers.user:index)
+        (@GET-BY-ID env "/users/([0-9]+)" #'com.momoiroshikibu.controllers.user:show)
+;        (@DELETE/{id} "/users/([0-9]+)" #'user-controller:destroy)
+        (@POST env "/users" #'com.momoiroshikibu.controllers.user:create)
 
         (@GET env "/locations" #'location-index)
         (@POST env "/locations" #'register-location)

@@ -21,13 +21,14 @@
                 :request-parameters)
   (:import-from :cl-json
                 :encode-json-to-string)
-  (:export :users
-           :register
+  (:export :index
+           :show
+           :create
            :destroy))
 (in-package :com.momoiroshikibu.controllers.user)
 
 
-(defun users (env)
+(defun index (env)
   (let* ((users (get-users 1000))
         ({users} (encode-json-to-string users)))
     `(200
@@ -35,7 +36,7 @@
       (,{users}))))
 
 
-(defun users-by-id (user-id)
+(defun show (user-id)
   (let ((user (get-user-by-id user-id)))
     (if user
         `(200
@@ -46,7 +47,7 @@
           ("{\"message\": \"user not found\"}")))))
 
 
-(defun register (env)
+(defun create (env)
   (let* ((request (lack.request:make-request env))
          (body-parameters (lack.request:request-body-parameters request))
          (first-name (cdr (assoc "first-name" body-parameters :test #'string=)))
