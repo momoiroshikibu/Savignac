@@ -1,0 +1,31 @@
+version: '2'
+
+services:
+
+  database:
+    build: "./docker/images/database"
+    image: savignac-database
+    environment:
+      MYSQL_DATABASE: savignac
+      MYSQL_ROOT_PASSWORD: savignac
+    volumes_from:
+      - storage:rw
+    volumes:
+      - ./sql/:/docker-entrypoint-initdb.d
+
+  backend:
+    build: "./docker/images/backend"
+    image: savignac-api
+    command: "clackup /Savignac/server.lisp"
+    ports:
+      - "5000:5000"
+    links:
+      - database
+    volumes:
+      - ./:/Savignac
+
+  storage:
+    build: "./docker/images/storage"
+    image: savignac-storage
+    volumes:
+      - ./opt:/opt:rw
