@@ -21,6 +21,10 @@ services:
       - "5000:5000"
     links:
       - database
+    logging:
+      driver: fluentd
+    depends_on:
+      - logger
     volumes:
       - ./:/Savignac
 
@@ -29,3 +33,12 @@ services:
     image: savignac-storage
     volumes:
       - ./opt:/opt:rw
+
+  logger:
+    build: "./docker/images/fluentd"
+    ports:
+      - "24224:24224"
+#     volumes:
+#       - ./:/fluentd/etc
+#     environment:
+#       FLUENTD_CONF: fluentd.conf

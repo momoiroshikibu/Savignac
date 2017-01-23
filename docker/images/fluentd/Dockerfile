@@ -1,0 +1,2 @@
+FROM fluent/fluentd
+
