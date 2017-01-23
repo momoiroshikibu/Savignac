@@ -1,5 +1,6 @@
 (in-package :cl-user)
 (load (merge-pathnames (make-pathname :directory '(:relative "./dependencies.lisp"))))
+(load (merge-pathnames (make-pathname :directory '(:relative "./app-package.lisp"))))
 (defpackage com.momoiroshikibu.server
   (:use :cl)
   (:import-from :clack

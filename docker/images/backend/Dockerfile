@@ -30,4 +30,8 @@ RUN apt-get install libmysqlclient-dev -y
 RUN ln -s /usr/lib/x86_64-linux-gnu/libmysqlclient.so /usr/lib/x86_64-linux-gnu/libmysqlclient_r.so
 RUN ls -la /opt
 
+
+ADD dependencies.lisp /tmp/dependencies.lisp
+RUN ros run -Q -- --load /root/.roswell/archives/quicklisp.lisp --script /tmp/dependencies.lisp
+
 WORKDIR /Savignac
