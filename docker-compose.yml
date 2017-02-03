@@ -43,4 +43,4 @@ services:
     volumes:
       - ./:/fluentd/etc
     environment:
-      FLUENTD_CONF: fluentd.conf
+      FLUENTD_CONF: ./logger/fluentd.conf
