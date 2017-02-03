@@ -31,7 +31,7 @@ services:
       - ./backend:/Savignac
 
   storage:
-    build: "./docker/images/storage"
+    build: "./storage"
     image: savignac-storage
     volumes:
       - ./opt:/opt:rw
