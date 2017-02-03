@@ -37,7 +37,7 @@ services:
       - ./opt:/opt:rw
 
   logger:
-    build: "./docker/images/fluentd"
+    build: "./logger"
     ports:
       - "24224:24224"
     volumes:
