@@ -3,7 +3,7 @@ version: '2'
 services:
 
   database:
-    build: "./docker/images/database"
+    build: "./database"
     image: savignac-database
     environment:
       MYSQL_DATABASE: savignac
