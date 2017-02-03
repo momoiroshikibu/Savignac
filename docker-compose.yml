@@ -34,7 +34,7 @@ services:
     build: "./storage"
     image: savignac-storage
     volumes:
-      - ./opt:/opt:rw
+      - ./.storage:/opt:rw
 
   logger:
     build: "./logger"
