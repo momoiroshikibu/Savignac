@@ -11,22 +11,24 @@ services:
     volumes_from:
       - storage:rw
     volumes:
-      - ./sql/:/docker-entrypoint-initdb.d
+      - ./backend/sql/:/docker-entrypoint-initdb.d
 
   backend:
-    build: "./docker/images/backend"
+    build: "./backend"
     image: savignac-api
     command: "clackup /Savignac/server.lisp"
     ports:
       - "5000:5000"
     links:
       - database
+      - logger
     logging:
       driver: fluentd
     depends_on:
       - logger
+      - database
     volumes:
-      - ./:/Savignac
+      - ./backend:/Savignac
 
   storage:
     build: "./docker/images/storage"
@@ -38,7 +40,7 @@ services:
     build: "./docker/images/fluentd"
     ports:
       - "24224:24224"
-#     volumes:
-#       - ./:/fluentd/etc
-#     environment:
-#       FLUENTD_CONF: fluentd.conf
+    volumes:
+      - ./:/fluentd/etc
+    environment:
+      FLUENTD_CONF: fluentd.conf
