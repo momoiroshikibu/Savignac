@@ -35,7 +35,7 @@
 
 (defun get-users (n)
   (let* ((query (dbi:prepare *connection*
-                             "select * from users limit ?"))
+                             "select * from users order by id limit ?"))
          (result (dbi:execute query n)))
     (loop for row = (dbi:fetch result)
        while row
